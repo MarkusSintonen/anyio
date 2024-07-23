@@ -1688,10 +1688,11 @@ class Lock(BaseLock):
 
     async def acquire(self) -> None:
         if self._owner_task is None and not self._waiters:
-            await AsyncIOBackend.checkpoint_if_cancelled()
+            #await AsyncIOBackend.checkpoint_if_cancelled()
             self._owner_task = current_task()
             try:
-                await AsyncIOBackend.cancel_shielded_checkpoint()
+                pass
+                #await AsyncIOBackend.cancel_shielded_checkpoint()
             except CancelledError:
                 self.release()
                 raise
